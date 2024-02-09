@@ -1,0 +1,39 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+double equation(double x) {
+    return x * x - 4; 
+}
+
+double derivative(double x) {
+    return 2 * x; // Example: derivative of x^2 - 4 is 2x
+}
+void newtonsMethod(double initialGuess, double tolerance) {
+    double x0 = initialGuess;
+    int iterations = 0;
+
+    while (fabs(equation(x0)) > tolerance) {
+        iterations++;
+        x0 = x0 - equation(x0) / derivative(x0);
+    }
+
+    cout << "a. Estimated root of the equation: " << x0 << endl;
+    cout << "b. Functional value at calculated root: " << equation(x0) << endl;
+    cout << "c. Required number of iterations: " << iterations << endl;
+}
+
+int main() {
+    double initialGuess, tolerance;
+
+    cout << "Enter initial guess: ";
+    cin >> initialGuess;
+
+    cout << "Enter tolerance: ";
+    cin >> tolerance;
+
+    newtonsMethod(initialGuess, tolerance);
+
+    return 0;
+}

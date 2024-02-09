@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+// Define your non-linear equation
+double f(double x) {
+    return pow(x, 3) - 5 * x - 9;
+}
+
+double half_interval_method(double a, double b, double tol = 1e-6, int max_iter = 100) {
+    if (f(a) * f(b) > 0) {
+        cout << "Error: The interval [a, b] does not contain a root." << endl;
+        return -1.0; // indicating failure
+    }
+
+    int iteration = 0;
+    while (iteration < max_iter) {
+        double c = (a + b) / 2;
+        double fc = f(c);
+
+        cout << "Iteration " << iteration + 1 << ":" << endl;
+        cout << "a = " << a << ", b = " << b << ", c = " << c << ", f(c) = " << fc << endl;
+
+        if (fabs(fc) < tol) {
+            cout << "\nRoot Found!" << endl;
+            cout << "a. Estimated Root of the Equation: " << c << endl;
+            cout << "b. Functional Value at Calculated Root: " << fc << endl;
+            cout << "c. Required Number of Iterations: " << iteration + 1 << endl;
+            return c;
+        }
+
+        if (f(a) * fc < 0) {
+            b = c;
+        } else {
+            a = c;
+        }
+
+        iteration++;
+    }
+
+    cout << "\nMax iterations reached. Solution not found." << endl;
+    return -1.0; // indicating failure
+}
+
+int main() {
+    // Read initial guesses from the user
+    double initial_guess_a, initial_guess_b;
+    cout << "Enter the initial guess 'a': ";
+    cin >> initial_guess_a;
+    cout << "Enter the initial guess 'b': ";
+    cin >> initial_guess_b;
+
+    // Solve the equation using the Half Interval method
+    double result = half_interval_method(initial_guess_a, initial_guess_b);
+
+    if (result != -1.0) {
+        cout << "\nFinal result: Estimated root = " << result << endl;
+    }
+
+    return 0;
+}

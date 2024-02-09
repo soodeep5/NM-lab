@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+double equation(double x) {
+    return x * x - 4; 
+}
+
+void secantMethod(double x0, double x1, double tolerance) {
+    double xn_minus_1 = x0;
+    double xn = x1;
+    int iterations = 0;
+
+    while (fabs(equation(xn)) > tolerance) {
+        iterations++;
+        double next_xn = xn - (equation(xn) * (xn - xn_minus_1)) / (equation(xn) - equation(xn_minus_1));
+        xn_minus_1 = xn;
+        xn = next_xn;
+    }
+
+    cout << "a. Estimated root of the equation: " << xn << endl;
+    cout << "b. Functional value at calculated root: " << equation(xn) << endl;
+    cout << "c. Required number of iterations: " << iterations << endl;
+}
+
+int main() {
+    double initialGuessX0, initialGuessX1, tolerance;
+
+    cout << "Enter initial guess X0: ";
+    cin >> initialGuessX0;
+
+    cout << "Enter initial guess X1: ";
+    cin >> initialGuessX1;
+
+    cout << "Enter tolerance: ";
+    cin >> tolerance;
+
+   
+    secantMethod(initialGuessX0, initialGuessX1, tolerance);
+
+    return 0;
+}
